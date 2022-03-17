@@ -1,0 +1,20 @@
+fun main() {
+    val queue: Queue<String> = Queue()
+    queue.offer("abc")
+    queue.offer("bda")
+    queue.offer("fge")
+    queue.offer("dgf")
+    println(queue.remove())
+    println(queue.element())
+    println(queue.peek())
+    println(queue.poll())
+    println(queue)
+
+    val stack: Stack<Int> = Stack()
+    stack.push(1)
+    stack.push(2)
+    stack.push(3)
+    println(stack.pop())
+    println(stack.peek())
+    println(stack)
+}
