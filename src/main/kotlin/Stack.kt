@@ -1,5 +1,5 @@
 private class NodeRev<T>(var data: T) {
-    lateinit var prev: NodeRev<T>
+    var prev: NodeRev<T>?=null
     override fun toString(): String {
         return "$data"
     }
@@ -20,13 +20,13 @@ class Stack<T> {
         }
     }
 
-    fun pop(): T {
+    fun pop(): T? {
         val data: T = last!!.data
         last = last!!.prev
         return data
     }
 
-    fun peek(): T {
+    fun peek(): T? {
         return last!!.data
     }
 
