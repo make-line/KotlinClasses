@@ -239,4 +239,61 @@ class CarServiceTest {
             listOf("Ленд Крузер 300", "Родстер", "Серия 7"),
             carService.getFirstThreeFilteredItemsSeq(carList) { Car -> Car.price == 10000000.00 })
     }
+
+    @Test
+    fun `проверка метода carGroupByType`() {
+        val carList = listOf<Car>(
+            Car(
+                "Ленд Крузер 300",
+                "Тойота",
+                "Внедорожник",
+                15720000.00,
+                9.00
+            ),
+            Car(
+                "Родстер",
+                "Тесла",
+                "Седан",
+                20000000.00,
+                0.00
+            ),
+            Car(
+                "Серия 7",
+                "БМВ",
+                "Седан",
+                10650000.00,
+                7.00
+            )
+        )
+        val carService = CarService()
+        val carListResult = mapOf<String, List<Car>>(
+            "Внедорожник" to listOf(
+                Car(
+                    "Ленд Крузер 300",
+                    "Тойота",
+                    "Внедорожник",
+                    15720000.00,
+                    9.00
+                )
+            ),
+            "Седан" to listOf(
+                Car(
+                    "Родстер",
+                    "Тесла",
+                    "Седан",
+                    20000000.00,
+                    0.00
+                ),
+                Car(
+                    "Серия 7",
+                    "БМВ",
+                    "Седан",
+                    10650000.00,
+                    7.00
+                )
+            )
+        )
+        assertEquals(carListResult, carService.carGroupByType(carList))
+    }
+
 }

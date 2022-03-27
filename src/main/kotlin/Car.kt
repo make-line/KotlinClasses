@@ -96,4 +96,7 @@ class CarService() {
             )
         }.toList()
 
+    fun carGroupByType(collection: Collection<Car>): Map<String, List<Car>> =
+        collection.groupBy { it.carType }
+
 }
