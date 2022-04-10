@@ -1,4 +1,4 @@
-package com.example.demo.config
+package com.example.demo.configuration
 
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus

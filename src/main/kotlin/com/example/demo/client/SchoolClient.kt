@@ -1,7 +1,6 @@
 package com.example.demo.client
 
-import com.example.demo.models.School
-import com.example.demo.models.SchoolDTO
+import com.example.demo.model.School
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -14,7 +13,7 @@ class SchoolClient(
     @Value("\${school.address}")
     private lateinit var schoolAddress: String
 
-    fun enrichSchoolInfo(requestSchool: SchoolDTO) =
+    fun enrichSchoolInfo(requestSchool: School) =
         restTemplate.postForEntity(schoolAddress, requestSchool, School::class.java).body
             ?: throw IllegalStateException("Не удалось обогатить данные")
 }

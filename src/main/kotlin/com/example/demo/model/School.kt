@@ -1,6 +1,4 @@
-package com.example.demo.models;
-
-import org.springframework.stereotype.Component
+package com.example.demo.model;
 
 
 data class School(

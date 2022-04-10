@@ -2,15 +2,14 @@ package com.example.demo
 
 
 import com.example.demo.client.SchoolClient
-import com.example.demo.models.School
-import com.example.demo.models.SchoolDTO
-import com.example.demo.repo.SchoolRepo
+import com.example.demo.exception.MyException
+import com.example.demo.model.School
+import com.example.demo.repository.SchoolRepository
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.mockk.every
-import io.mockk.mockkObject
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -18,17 +17,15 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
-import java.util.*
 import com.ninjasquad.springmockk.MockkBean
 import org.hamcrest.CoreMatchers.containsString
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import kotlin.NoSuchElementException
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class DemoApplicationTests {
     private companion object {
-        private val ReqSchool1 = SchoolDTO(1, "Черкизовская 2", 34, 730)
+        private val ReqSchool1 = School(1, "Черкизовская 2", 34, 730)
         private val ResSchool1 = School(1, "Черкизовская 2", 34, 730)
         private val ResSchool2 = School(2, "Черкизовская 45", 23, 500)
 
@@ -41,7 +38,7 @@ class DemoApplicationTests {
     private lateinit var schoolClient: SchoolClient
 
     @MockkBean
-    lateinit var schoolRepo: SchoolRepo
+    lateinit var schoolRepo: SchoolRepository
 
     @Test
     fun getSchoolById() {
@@ -85,9 +82,9 @@ class DemoApplicationTests {
     }
     @Test
     fun getSchoolByCount(){
-        every {schoolRepo.getSchoolByCount(any())  } returns mutableListOf(ResSchool1, ResSchool2)
+        every {schoolRepo.getSchoolsByCountOfStudentsBiggerThan(any())  } returns mutableListOf(ResSchool1, ResSchool2)
         mockMvc.perform(get
-            ("/schools").param("count_of_students","500")
+            ("/schools").param("countOfStudents","500")
         )
             .andExpect(status().isOk)
             .andExpect(jsonPath("$[0].number").value(1))
@@ -102,10 +99,19 @@ class DemoApplicationTests {
     }
     @Test
     fun getSchoolByCountFail(){
-        every {schoolRepo.getSchoolByCount(any()) } throws  IllegalArgumentException("Во всех школах меньшее количество учеников")
-        mockMvc.perform(get("/schools").param("count_of_students","800"))
+        every {schoolRepo.getSchoolsByCountOfStudentsBiggerThan(any()) } throws  IllegalArgumentException("")
+        mockMvc.perform(get("/schools").param("countOfStudents","800"))
             .andExpect(status().is4xxClientError)
-            .andExpect(content().string(containsString("Во всех школах меньшее количество учеников")))
+            .andExpect(content().string(containsString("Нет школ с таким или более количеством учеников")))
+
+    }
+
+    @Test
+    fun serverErrorTest(){
+        every {schoolRepo.getSchoolsByCountOfStudentsBiggerThan(any()) } throws  MyException("Ошибка на стороне сервера")
+        mockMvc.perform(get("/schools").param("countOfStudents","800"))
+            .andExpect(status().is5xxServerError)
+            .andExpect(content().string(containsString("Ошибка на стороне сервера")))
 
     }
 
