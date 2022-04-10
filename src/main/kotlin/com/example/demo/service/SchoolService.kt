@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service
 @Service
 class SchoolService(var schools: SchoolRepository, var schoolClient: SchoolClient) {
 
-    fun getSchoolByNumber(id:Int): School{
+    fun getSchoolByNumber(id: Int): School {
         return schools.getSchoolByNumber(id)
     }
 
@@ -18,5 +18,5 @@ class SchoolService(var schools: SchoolRepository, var schoolClient: SchoolClien
         return responseSchool
     }
 
-    fun getSchoolWhereCountOfStudentsBiggerThan(count:Int)=schools.getSchoolsByCountOfStudentsBiggerThan(count)
+    fun getSchoolWhereCountOfStudentsBiggerThan(count: Int) = schools.getSchoolsByCountOfStudentsBiggerThan(count)
 }

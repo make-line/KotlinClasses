@@ -5,21 +5,19 @@ import com.example.demo.client.SchoolClient
 import com.example.demo.exception.MyException
 import com.example.demo.model.School
 import com.example.demo.repository.SchoolRepository
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.ninjasquad.springmockk.MockkBean
+import io.mockk.every
+import org.hamcrest.CoreMatchers.containsString
 import org.junit.jupiter.api.Test
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import com.fasterxml.jackson.databind.ObjectMapper
-import io.mockk.every
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-
 import org.springframework.http.MediaType
+import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.*
-import com.ninjasquad.springmockk.MockkBean
-import org.hamcrest.CoreMatchers.containsString
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -34,6 +32,7 @@ class DemoApplicationTests {
     @Autowired
     private lateinit var mockMvc: MockMvc
     private val objectMapper = ObjectMapper()
+
     @MockkBean
     private lateinit var schoolClient: SchoolClient
 
@@ -43,8 +42,9 @@ class DemoApplicationTests {
     @Test
     fun getSchoolById() {
         every { schoolRepo.getSchoolByNumber(any()) } returns ResSchool1
-        mockMvc.perform(get
-            ("/schools/1")
+        mockMvc.perform(
+            get
+                ("/schools/1")
         )
             .andExpect(status().isOk)
             .andExpect(jsonPath("$.number").value(1))
@@ -55,7 +55,7 @@ class DemoApplicationTests {
 
     @Test
     fun getSchoolBycOUNTIdFail() {
-        every { schoolRepo.getSchoolByNumber(any()) } throws  IllegalArgumentException("Такой школы нет")
+        every { schoolRepo.getSchoolByNumber(any()) } throws IllegalArgumentException("Такой школы нет")
 
         mockMvc.perform(get("/schools/1"))
             .andExpect(status().is4xxClientError)
@@ -80,11 +80,13 @@ class DemoApplicationTests {
             .andExpect(jsonPath("$.countOfTeachers").value(34))
             .andExpect(jsonPath("$.countOfStudents").value(730))
     }
+
     @Test
-    fun getSchoolByCount(){
-        every {schoolRepo.getSchoolsByCountOfStudentsBiggerThan(any())  } returns mutableListOf(ResSchool1, ResSchool2)
-        mockMvc.perform(get
-            ("/schools").param("countOfStudents","500")
+    fun getSchoolByCount() {
+        every { schoolRepo.getSchoolsByCountOfStudentsBiggerThan(any()) } returns mutableListOf(ResSchool1, ResSchool2)
+        mockMvc.perform(
+            get
+                ("/schools").param("countOfStudents", "500")
         )
             .andExpect(status().isOk)
             .andExpect(jsonPath("$[0].number").value(1))
@@ -97,31 +99,29 @@ class DemoApplicationTests {
             .andExpect(jsonPath("$[1].countOfStudents").value(500))
 
     }
+
     @Test
-    fun getSchoolByCountFail(){
-        every {schoolRepo.getSchoolsByCountOfStudentsBiggerThan(any()) } throws  IllegalArgumentException("")
-        mockMvc.perform(get("/schools").param("countOfStudents","800"))
+    fun getSchoolByCountFail() {
+        every { schoolRepo.getSchoolsByCountOfStudentsBiggerThan(any()) } throws IllegalArgumentException("Нет школ с таким или более количеством учеников")
+        mockMvc.perform(get("/schools").param("countOfStudents", "800"))
             .andExpect(status().is4xxClientError)
             .andExpect(content().string(containsString("Нет школ с таким или более количеством учеников")))
 
     }
 
     @Test
-    fun serverErrorTest(){
-        every {schoolRepo.getSchoolsByCountOfStudentsBiggerThan(any()) } throws  MyException("Ошибка на стороне сервера")
-        mockMvc.perform(get("/schools").param("countOfStudents","800"))
+    fun serverErrorTest() {
+        every { schoolRepo.getSchoolsByCountOfStudentsBiggerThan(any()) } throws MyException("Ошибка на стороне сервера")
+        mockMvc.perform(get("/schools").param("countOfStudents", "800"))
             .andExpect(status().is5xxServerError)
             .andExpect(content().string(containsString("Ошибка на стороне сервера")))
 
     }
 
 
-
-
-
-        @Test
-        fun contextLoads() {
-        }
-
+    @Test
+    fun contextLoads() {
     }
+
+}
 

@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/schools")
 class RestController(val schoolService: SchoolService) {
     @GetMapping("/{id}")
-    fun getSchoolByNumber(@PathVariable id: Int)=
+    fun getSchoolByNumber(@PathVariable id: Int) =
         schoolService.getSchoolByNumber(id)
+
     @PostMapping("/add")
-    fun addSchool(@RequestBody school: School)=
+    fun addSchool(@RequestBody school: School) =
         schoolService.addSchool(school)
+
     @GetMapping
-    fun getSchoolWhereCountOfStudentsBiggerThan(@RequestParam countOfStudents:Int)=schoolService.getSchoolWhereCountOfStudentsBiggerThan(countOfStudents)
+    fun getSchoolWhereCountOfStudentsBiggerThan(@RequestParam countOfStudents: Int) =
+        schoolService.getSchoolWhereCountOfStudentsBiggerThan(countOfStudents)
 }
