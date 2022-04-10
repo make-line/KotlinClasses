@@ -18,5 +18,5 @@ class RestController(val schoolService: SchoolService) {
 
     @GetMapping
     fun getSchoolWhereCountOfStudentsBiggerThan(@RequestParam countOfStudents: Int) =
-        schoolService.getSchoolWhereCountOfStudentsBiggerThan(countOfStudents)
+        schoolService.getSchoolsWhereCountOfStudentsBiggerThan(countOfStudents)
 }

@@ -18,5 +18,5 @@ class SchoolService(var schools: SchoolRepository, var schoolClient: SchoolClien
         return responseSchool
     }
 
-    fun getSchoolWhereCountOfStudentsBiggerThan(count: Int) = schools.getSchoolsByCountOfStudentsBiggerThan(count)
+    fun getSchoolsWhereCountOfStudentsBiggerThan(count: Int) = schools.getSchoolsByCountOfStudentsBiggerThan(count)
 }
