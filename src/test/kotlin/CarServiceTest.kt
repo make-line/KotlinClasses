@@ -1,12 +1,10 @@
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertAll
 
 
 class CarServiceTest {
     @Test
-    fun `проверка метода translateAndSortByPrice`() {
+    fun translateAndSortByPrice() {
         val carList = listOf<Car>(
             Car(
                 "Ленд Крузер 300",
@@ -58,7 +56,7 @@ class CarServiceTest {
     }
 
     @Test
-    fun `проверка метода translateAndSortByPriceSeq`() {
+    fun translateAndSortByPriceSeq() {
         val carList = listOf<Car>(
             Car(
                 "Ленд Крузер 300",
@@ -106,11 +104,11 @@ class CarServiceTest {
                 0.00
             )
         )
-        assertEquals(carListResult, carService.translateAndSortByPriceSeq(carList))
+        assertEquals(carListResult, carService.translateAndSortByPrice(carList))
     }
 
     @Test
-    fun `проверка метода carGroup`() {
+    fun carGroup() {
         val carList = listOf<Car>(
             Car(
                 "Ленд Крузер 300",
@@ -162,11 +160,11 @@ class CarServiceTest {
                 )
             )
         )
-        assertEquals(carListResult, carService.carGroup(carList, "carType"))
+        assertEquals(carListResult, carService.carGroup(carList, "type"))
     }
 
     @Test
-    fun `проверка метода getFirstThreeFilteredItems`() {
+    fun getFirstThreeFilteredItems() {
         val carList = listOf<Car>(
             Car(
                 "Ленд Крузер 300",
@@ -204,7 +202,7 @@ class CarServiceTest {
     }
 
     @Test
-    fun `проверка метода getFirstThreeFilteredItemsSeq`() {
+    fun getFirstThreeFilteredItemsSeq() {
         val carList = listOf<Car>(
             Car(
                 "Ленд Крузер 300",
@@ -242,7 +240,7 @@ class CarServiceTest {
     }
 
     @Test
-    fun `проверка метода carGroupByType`() {
+    fun carGroupByType() {
         val carList = listOf<Car>(
             Car(
                 "Ленд Крузер 300",
