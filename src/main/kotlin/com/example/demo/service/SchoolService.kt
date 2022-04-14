@@ -6,7 +6,7 @@ import com.example.demo.repository.SchoolRepository
 import org.springframework.stereotype.Service
 
 @Service
-class SchoolService( var schools: SchoolRepository, var schoolClient: SchoolClient) {
+class SchoolService(var schools: SchoolRepository, var schoolClient: SchoolClient) {
 
     fun getSchoolByNumber(id: Int): School {
         return schools.getSchoolById(id)

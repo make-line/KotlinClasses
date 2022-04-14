@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository
 
 
 @Repository
-interface SchoolJpaRepository : JpaRepository<School, Int> {
+interface SchoolJpaRepositoryInterface : JpaRepository<School, Int> {
     fun getSchoolsByCountOfStudentsIsAfter(int: Int): List<School>
 }

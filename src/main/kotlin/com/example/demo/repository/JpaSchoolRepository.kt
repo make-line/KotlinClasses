@@ -2,13 +2,12 @@ package com.example.demo.repository
 
 import com.example.demo.model.School
 import org.springframework.context.annotation.Primary
-import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 
 
 @Service
 @Primary
-class SchoolJpaRepositoryImpl(private val repository: SchoolJpaRepository) : SchoolRepository {
+class JpaSchoolRepository(private val repository: SchoolJpaRepositoryInterface) : SchoolRepository {
     override fun saveSchool(school: School): School {
         return repository.save(school)
     }

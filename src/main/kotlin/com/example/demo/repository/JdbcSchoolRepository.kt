@@ -9,14 +9,14 @@ import org.springframework.stereotype.Service
 
 @Service
 //@Primary
-class JdbcRepo(var jdbcTemplate: JdbcTemplate) : SchoolRepository {
+class JdbcSchoolRepository(var jdbcTemplate: JdbcTemplate) : SchoolRepository {
     override fun saveSchool(school: School): School {
         jdbcTemplate.update(
-            "merge into schools (address, countOfStudents, countOfTeachers, number) key (id) values (?, ?, ?, ?)",
+            "merge into schools (address, count_of_students, count_of_teachers, id) key (id) values (?, ?, ?, ?)",
             school.address,
             school.countOfStudents,
             school.countOfTeachers,
-            school.number
+            school.id
         )
         return school
     }
@@ -29,11 +29,12 @@ class JdbcRepo(var jdbcTemplate: JdbcTemplate) : SchoolRepository {
             id
         )
 
-    override fun getSchoolsWhereCountOfStudentsBigger(count: Int): List<School> =
+    override fun getSchoolsWhereCountOfStudentsBigger(count_of_students: Int): List<School> =
         jdbcTemplate.query(
-            "select * from school where count_of_students >?",
+            "select * from schools where count_of_students >?",
 
-            DataClassRowMapper(School::class.java)
+            DataClassRowMapper(School::class.java),
+            count_of_students
         )
 
 }

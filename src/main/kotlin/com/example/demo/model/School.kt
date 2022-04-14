@@ -6,9 +6,8 @@ import javax.persistence.*
 @Table(name = "schools")
 data class School(
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "toy_id")
-    var number: Int?=null,
+    @Column(name = "id")
+    var id: Int?=null,
     @Column(name = "address")
     var address: String?=null,
     @Column(name = "count_of_teachers")
