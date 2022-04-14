@@ -1,10 +1,23 @@
 spring:
+  main:
+    allow-circular-references: true
   application:
     name: schools
   profiles:
     active: dev
+  datasourse:
+    url: jdbc:h2:mem:schools
+    driverClassName: org.h2.Driver
+    username: user
+    password: 12345
+  liquibase:
+      change-log: db/db.changelog-master.xml
+      enabled: false
+  jpa:
+    show-sql: true
 server:
   port: 8080
 
 school:
   address: http://localhost:8080
+

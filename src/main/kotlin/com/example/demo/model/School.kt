@@ -1,9 +1,18 @@
-package com.example.demo.model;
+package com.example.demo.model
+import javax.persistence.*
 
 
+@Entity
+@Table(name = "schools")
 data class School(
-    var number: Int,
-    var address: String,
-    var countOfTeachers: Int,
-    var countOfStudents: Int,
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "toy_id")
+    var number: Int?=null,
+    @Column(name = "address")
+    var address: String?=null,
+    @Column(name = "count_of_teachers")
+    var countOfTeachers: Int?=null,
+    @Column(name = "count_of_students")
+    var countOfStudents: Int?=null
 )
