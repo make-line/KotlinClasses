@@ -4,7 +4,7 @@ import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 
 
-class ThreadPoolTest: Object() {
+class ThreadPoolTest : Object() {
     private val threadPool = ThreadPool(5)
 
     @Test
