@@ -9,7 +9,7 @@ class ThreadPool() : Executor {
     constructor(count: Int) : this() {
         if (count <= 0) throw IllegalArgumentException("недопустимое клоичество потоков")
         for (i in 1..count) {
-            var thread = WorkerThread(tasks, obj)
+            val thread = WorkerThread(tasks, obj)
             thread.start()
             threads.add(thread)
         }
@@ -26,7 +26,7 @@ class ThreadPool() : Executor {
     }
 
     fun shutdown() {
-        threads.forEach() {
+        threads.forEach{
             it.stopState = true
             it.interrupt()
         }
