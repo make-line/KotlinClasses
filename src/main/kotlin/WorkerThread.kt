@@ -3,8 +3,8 @@ import java.util.concurrent.LinkedBlockingQueue
 class WorkerThread(private val tasks: LinkedBlockingQueue<Runnable>, private val obj: Object) : Thread() {
     var stopState = false
     override fun run() {
-        var task: Runnable? = null
         while (true) {
+            var task: Runnable? = null
             if (stopState) break
             synchronized(obj) {
                 if (!tasks.isEmpty()) {
@@ -16,7 +16,6 @@ class WorkerThread(private val tasks: LinkedBlockingQueue<Runnable>, private val
                 }
             }
             task?.run()
-            task = null
         }
     }
 }
