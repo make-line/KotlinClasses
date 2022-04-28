@@ -1,0 +1,25 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+
+    <changeSet author="make-line" id="create">
+        <createTable tableName="schools">
+            <column name="id" type="INT" autoIncrement="false">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_contacts"/>
+            </column>
+            <column name="address" type="VARCHAR(255)"/>
+            <column name="count_of_teachers" type="INT"/>
+            <column name="count_of_students" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="make-line" id="fill">
+        <sql>
+            insert into schools(id, address, count_of_teachers, count_of_students) values
+                (1, 'Черкизовская 2', 4, 73),
+                (2, 'Черкизовская 5', 50, 730),
+                (3, 'Черкизовская 8', 34, 800);
+        </sql>
+    </changeSet>
+</databaseChangeLog>
