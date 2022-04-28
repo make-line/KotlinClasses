@@ -15,8 +15,4 @@ class JpaSchoolRepository(private val repository: SchoolJpaRepositoryInterface) 
     override fun getSchoolById(id: Int): School {
         return repository.getById(id)
     }
-
-    override fun getSchoolsWhereCountOfStudentsBigger(count: Int): List<School> {
-        return repository.getSchoolsByCountOfStudentsIsAfter(count)
-    }
 }

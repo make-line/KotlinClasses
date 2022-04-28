@@ -8,5 +8,4 @@ import org.springframework.stereotype.Repository
 interface SchoolRepository {
     fun saveSchool(school: School): School
     fun getSchoolById(id: Int): School
-    fun getSchoolsWhereCountOfStudentsBigger(count: Int): List<School>
 }

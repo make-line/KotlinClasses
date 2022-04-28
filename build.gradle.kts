@@ -14,26 +14,20 @@ repositories {
 }
 
 dependencies {
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
+    implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
-    implementation("org.springdoc:springdoc-openapi-ui:1.6.6")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.junit.jupiter:junit-jupiter:5.8.2")
-
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springdoc:springdoc-openapi-ui:1.6.6")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("com.h2database:h2:2.1.210")
-    implementation("org.liquibase:liquibase-core:4.9.0")
-    implementation("org.projectlombok:lombok:1.18.20")
+    implementation("com.h2database:h2")
+    implementation("org.liquibase:liquibase-core")
+    implementation("org.springdoc:springdoc-openapi-ui:1.6.6")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.8.2")
     testImplementation("com.ninja-squad:springmockk:3.1.1")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("io.mockk:mockk:1.12.3")
 }
 
 

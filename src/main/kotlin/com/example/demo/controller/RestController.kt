@@ -1,6 +1,7 @@
 package com.example.demo.controller
 
 import com.example.demo.model.School
+import com.example.demo.model.SchoolDto
 import com.example.demo.service.SchoolService
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.RestController
@@ -12,11 +13,7 @@ class RestController(val schoolService: SchoolService) {
     fun getSchoolByNumber(@PathVariable id: Int) =
         schoolService.getSchoolByNumber(id)
 
-    @PostMapping("/add")
-    fun addSchool(@RequestBody school: School) =
+    @PostMapping
+    fun addSchool(school: SchoolDto) =
         schoolService.addSchool(school)
-
-    @GetMapping
-    fun getSchoolWhereCountOfStudentsBiggerThan(@RequestParam countOfStudents: Int) =
-        schoolService.getSchoolsWhereCountOfStudentsBiggerThan(countOfStudents)
 }

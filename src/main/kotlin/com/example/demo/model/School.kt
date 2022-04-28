@@ -1,4 +1,5 @@
 package com.example.demo.model
+
 import javax.persistence.*
 
 
@@ -7,11 +8,11 @@ import javax.persistence.*
 data class School(
     @Id
     @Column(name = "id")
-    var id: Int?=null,
+    var id: Int? = null,
     @Column(name = "address")
-    var address: String?=null,
+    var address: String? = null,
     @Column(name = "count_of_teachers")
-    var countOfTeachers: Int?=null,
+    var countOfTeachers: Int? = null,
     @Column(name = "count_of_students")
-    var countOfStudents: Int?=null
+    var countOfStudents: Int? = null
 )
