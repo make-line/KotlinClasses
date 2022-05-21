@@ -1,0 +1,19 @@
+
+spring:
+  datasourse:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password: sa
+  liquibase:
+    change-log: db/changelog/db.changelog-master.xml
+    enabled: true
+  jpa:
+    show-sql: true
+  activemq:
+    in-memory: true
+    pool:
+      enabled: false
+    packages:
+      trust-all: true
+
