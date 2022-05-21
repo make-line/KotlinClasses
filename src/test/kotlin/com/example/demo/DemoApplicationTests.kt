@@ -1,67 +1,48 @@
 package com.example.demo
 
-
-import com.example.demo.client.SchoolClient
-import com.example.demo.model.School
-import com.example.demo.repository.SchoolRepository
-import com.ninjasquad.springmockk.MockkBean
-import io.mockk.coEvery
-import io.mockk.every
+import com.example.demo.enums.Status
+import com.example.demo.enums.Type
+import com.example.demo.model.Event
+import com.example.demo.repository.EventRepository
+import com.example.demo.service.ScheduledService
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
+import java.lang.Thread.sleep
 
 @SpringBootTest
-@AutoConfigureMockMvc
 class DemoApplicationTests {
-    private companion object {
-        private val ResSchool1 = School(1, "Черкизовская 2", 34, 730)
-
-    }
 
     @Autowired
-    private lateinit var mockMvc: MockMvc
+    private lateinit var scheduledService: ScheduledService
 
-    @MockkBean
-    private lateinit var schoolClient: SchoolClient
+    @Autowired
+    private lateinit var eventRepository: EventRepository
 
-    @MockkBean
-    lateinit var schoolRepo: SchoolRepository
+
+    @BeforeEach
+    fun setUp() {
+        val event = Event()
+        event.id = 1
+        event.type = Type.SMS
+        event.body = "Hello SMS"
+        event.status = Status.NEW
+        eventRepository.save(event)
+    }
 
 
     @Test
-    fun getSchoolById() {
-        every { schoolRepo.getSchoolById(1) } returns ResSchool1
-        mockMvc.perform(
-            get
-                ("/schools/1")
+    fun updateEventStatus() {
+        scheduledService.send()
+        sleep(100)
+        val result = eventRepository.getById(1)
+        Assertions.assertAll(
+            { assertEquals("Hello SMS", result.body) },
+            { assertEquals(Type.SMS, result.type) },
+            { assertEquals(Status.DONE, result.status) },
         )
-            .andExpect(status().isOk)
-            .andExpect(jsonPath("$.id").value(1))
-            .andExpect(jsonPath("$.address").value("Черкизовская 2"))
-            .andExpect(jsonPath("$.countOfTeachers").value(34))
-            .andExpect(jsonPath("$.countOfStudents").value(730))
     }
-    @Test
-    fun addSchoolToList() {
-
-        coEvery { schoolClient.schoolTransform(any()) } returns ResSchool1
-
-        mockMvc.perform(
-            post("/schools")
-                .param("id", "5")
-                .param("address", "Черкизовская 2")
-                .param("countOfTeachers", "34")
-                .param("countOfStudents", "730")
-        )
-            .andExpect(status().isOk)
-    }
-
 }
-

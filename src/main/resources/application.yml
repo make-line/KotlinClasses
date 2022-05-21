@@ -1,24 +1,19 @@
+
 spring:
-  main:
-    allow-circular-references: true
-  application:
-    name: schools
-  profiles:
-    active: dev
   datasourse:
-    url: jdbc:h2:mem:schoolsDB
+    url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE
     driverClassName: org.h2.Driver
     username: sa
     password: sa
   liquibase:
-      change-log: db/changelog/db.changelog-master.xml
-      enabled: true
+    change-log: db/changelog/db.changelog-master.xml
+    enabled: true
   jpa:
     show-sql: true
-    database-platform: org.hibernate.dialect.H2Dialect
-server:
-  port: 8080
-
-school:
-  address: http://localhost:8080
+  activemq:
+    in-memory: true
+    pool:
+      enabled: false
+    packages:
+      trust-all: true
 
